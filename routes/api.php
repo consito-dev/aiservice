@@ -19,7 +19,8 @@ use Illuminate\Validation\ValidationException;
 |
 */
 
-Route::post('/sanctum/token', function (Request $request) {
+// Sanctum login
+Route::post('/login', function (Request $request) {
     try {
         $request->validateWithBag('token_creation', [
             'email' => 'required|email',
@@ -44,6 +45,34 @@ Route::post('/sanctum/token', function (Request $request) {
     return response()->json([
         'token' => $user->createToken($request->device_name)->plainTextToken
     ]);
+});
+
+// Sanctum register
+Route::post('/register', function (Request $request) {
+    try {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required',
+            'device_name' => 'required',
+        ]);
+    } catch (ValidationException $e) {
+        return response()->json([
+            'message' => 'The given data was invalid.',
+            'errors' => $e->errors(),
+        ], 422);
+    }
+
+    $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+    ]);
+
+    return response()->json([
+        'message' => 'User successfully registered',
+        'token' => $user->createToken($request->device_name)->plainTextToken
+    ], 201);
 });
 
 
