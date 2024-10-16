@@ -16,7 +16,7 @@ class OpenAIController extends Controller
             'messages' => [
                 ['role' => 'user', 'content' => $prompt ? $prompt : 'geef 10 voorbeelden van vette autos'],
             ],
-            'max_tokens' => 100
+            'max_tokens' => 1000
         ]);
 
         return response()->json([
