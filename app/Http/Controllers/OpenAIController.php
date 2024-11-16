@@ -9,11 +9,13 @@ class OpenAIController extends Controller
 {
     public function generateText(Request $request)
     {
+        $system = $request->input('system'); // system instruction: bv. jij bent een behulpzame assistent
         $prompt = $request->input('prompt');
 
         $result = OpenAI::chat()->create([
             'model' => 'gpt-4o',
             'messages' => [
+                ['role' => 'system', 'content' => $system ? $system : ''],
                 ['role' => 'user', 'content' => $prompt ? $prompt : 'geef 10 voorbeelden van vette autos'],
             ],
             'max_tokens' => 1000,
