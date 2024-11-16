@@ -17,7 +17,7 @@ class OpenAIController extends Controller
                 ['role' => 'user', 'content' => $prompt ? $prompt : 'geef 10 voorbeelden van vette autos'],
             ],
             'max_tokens' => 1000,
-            'temperature' => $requrest->input('temperature') ? $request->input('temperature') : 0.7
+            'temperature' => $request->input('temperature') ? $request->input('temperature') : 0.7
         ]);
 
         return response()->json([
