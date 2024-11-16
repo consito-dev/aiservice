@@ -12,7 +12,7 @@ class OpenAIController extends Controller
         $prompt = $request->input('prompt');
 
         $result = OpenAI::chat()->create([
-            'model' => 'gpt-3.5-turbo',
+            'model' => 'gpt-4o',
             'messages' => [
                 ['role' => 'user', 'content' => $prompt ? $prompt : 'geef 10 voorbeelden van vette autos'],
             ],
