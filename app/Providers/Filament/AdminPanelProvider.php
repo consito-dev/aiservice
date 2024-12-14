@@ -53,6 +53,12 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->authGuard('web')
+            ->registration(false)
+            ->login()
+            ->gate(function($user) {
+                return $user->isAdmin();
+            });
     }
 }
