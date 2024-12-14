@@ -99,4 +99,6 @@ Route::middleware(['auth:sanctum'])->post('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->post('/generate-text', [OpenAIController::class, 'generateText']);
 
+Route::middleware('auth:sanctum')->post('/prompt/{identifier}', [OpenAIController::class, 'execute']);
+
 
